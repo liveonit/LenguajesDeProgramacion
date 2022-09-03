@@ -49,7 +49,7 @@ fn stackalc(operations: HashMap<&str, fn(Vec<f64>) -> Vec<f64>>) {
 
 
 fn add(mut stack : Vec<f64>) -> Vec<f64> {
-    if (stack.len() > 1) {
+    if stack.len() > 1 {
         let item1 : f64 = match stack.pop() {
             Some(f64) => f64,
             None => 0.0
@@ -66,7 +66,7 @@ fn add(mut stack : Vec<f64>) -> Vec<f64> {
 }
 
 fn mult(mut stack : Vec<f64>) -> Vec<f64> {
-    if (stack.len() > 1) {
+    if stack.len() > 1 {
         let item1 : f64 = match stack.pop() {
             Some(f64) => f64,
             None => 1.0
@@ -83,7 +83,7 @@ fn mult(mut stack : Vec<f64>) -> Vec<f64> {
 }
 
 fn div(mut stack : Vec<f64>) -> Vec<f64> {
-    if (stack.len() > 1) {
+    if stack.len() > 1 {
         let item1 : f64 = match stack.pop() {
             Some(f64) => f64,
             None => 1.0
@@ -100,7 +100,7 @@ fn div(mut stack : Vec<f64>) -> Vec<f64> {
 }
 
 fn sub(mut stack : Vec<f64>) -> Vec<f64> {
-    if (stack.len() > 1) {
+    if stack.len() > 1 {
         let item1 : f64 = match stack.pop() {
             Some(f64) => f64,
             None => 0.0
@@ -117,7 +117,7 @@ fn sub(mut stack : Vec<f64>) -> Vec<f64> {
 }
 
 fn eq(mut stack : Vec<f64>) -> Vec<f64> {
-    if (stack.len() > 1) {
+    if stack.len() > 1 {
         let item1 : f64 = match stack.pop() {
             Some(f64) => f64,
             None => 0.0
@@ -137,7 +137,7 @@ fn eq(mut stack : Vec<f64>) -> Vec<f64> {
 }
 
 fn diff(mut stack : Vec<f64>) -> Vec<f64> {
-    if (stack.len() > 1) {
+    if stack.len() > 1 {
         let item1 : f64 = match stack.pop() {
             Some(f64) => f64,
             None => 0.0
@@ -157,7 +157,7 @@ fn diff(mut stack : Vec<f64>) -> Vec<f64> {
 }
 
 fn lt(mut stack : Vec<f64>) -> Vec<f64> {
-    if (stack.len() > 1) {
+    if stack.len() > 1 {
         let item1 : f64 = match stack.pop() {
             Some(f64) => f64,
             None => 0.0
@@ -177,7 +177,7 @@ fn lt(mut stack : Vec<f64>) -> Vec<f64> {
 }
 
 fn lte(mut stack : Vec<f64>) -> Vec<f64> {
-    if (stack.len() > 1) {
+    if stack.len() > 1 {
         let item1 : f64 = match stack.pop() {
             Some(f64) => f64,
             None => 0.0
@@ -197,7 +197,7 @@ fn lte(mut stack : Vec<f64>) -> Vec<f64> {
 }
 
 fn gt(mut stack : Vec<f64>) -> Vec<f64> {
-    if (stack.len() > 1) {
+    if stack.len() > 1 {
         let item1 : f64 = match stack.pop() {
             Some(f64) => f64,
             None => 0.0
@@ -217,7 +217,7 @@ fn gt(mut stack : Vec<f64>) -> Vec<f64> {
 }
 
 fn gte(mut stack : Vec<f64>) -> Vec<f64> {
-    if (stack.len() > 1) {
+    if stack.len() > 1 {
         let item1 : f64 = match stack.pop() {
             Some(f64) => f64,
             None => 0.0
@@ -237,7 +237,7 @@ fn gte(mut stack : Vec<f64>) -> Vec<f64> {
 }
 
 fn and(mut stack : Vec<f64>) -> Vec<f64> {
-    if (stack.len() > 1) {
+    if stack.len() > 1 {
         let item1 : f64 = match stack.pop() {
             Some(f64) => f64,
             None => 0.0
@@ -253,7 +253,7 @@ fn and(mut stack : Vec<f64>) -> Vec<f64> {
 }
 
 fn or(mut stack : Vec<f64>) -> Vec<f64> {
-    if (stack.len() > 1) {
+    if stack.len() > 1 {
         let item1 : f64 = match stack.pop() {
             Some(f64) => f64,
             None => 0.0
@@ -269,7 +269,7 @@ fn or(mut stack : Vec<f64>) -> Vec<f64> {
 }
 
 fn not(mut stack : Vec<f64>) -> Vec<f64> {
-    if (stack.len() > 1) {
+    if stack.len() > 1 {
         let item1 : f64 = match stack.pop() {
             Some(f64) => f64,
             None => 0.0
