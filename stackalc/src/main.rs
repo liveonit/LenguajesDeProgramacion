@@ -19,6 +19,8 @@ fn main() {
     operations.insert("AND", and);
     operations.insert("OR", or);
     operations.insert("NOT", not);
+    operations.insert("DUP", dup);
+    operations.insert("POP", pop);
 
     stackalc(operations);
 }
@@ -277,5 +279,17 @@ fn not(mut stack : Vec<f64>) -> Vec<f64> {
         let result: f64 = if item1==0.0 && item1.is_nan()  {0.0} else {1.0};
         stack.push(result)
     }
+    return stack;
+}
+
+fn dup(mut stack : Vec<f64>) -> Vec<f64> {
+    let item : f64 = stack.pop().unwrap();
+    stack.push(item);
+    stack.push(item);
+    return stack;
+}
+
+fn pop(mut stack : Vec<f64>) -> Vec<f64> {
+    stack.pop();
     return stack;
 }
