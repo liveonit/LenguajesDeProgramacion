@@ -10,7 +10,15 @@ fn main() {
     operations.insert("SUB", sub);
     operations.insert("MULT", mult);
     operations.insert("DIV", div);
-    operations.insert("RET", ret);
+    operations.insert("EQ", eq);
+    operations.insert("DIFF", diff);
+    operations.insert("LT", lt);
+    operations.insert("LTE", lte);
+    operations.insert("GT", gt);
+    operations.insert("GTE", gte);
+    operations.insert("AND", and);
+    operations.insert("OR", or);
+    operations.insert("NOT", not);
 
     stackalc(operations);
 }
@@ -108,6 +116,166 @@ fn sub(mut stack : Vec<f64>) -> Vec<f64> {
 
 }
 
-fn ret(mut stack : Vec<f64>) -> Vec<f64> {
+fn eq(mut stack : Vec<f64>) -> Vec<f64> {
+    if (stack.len() > 1) {
+        let item1 : f64 = match stack.pop() {
+            Some(f64) => f64,
+            None => 0.0
+        };
+        let item2 : f64 = match stack.pop() {
+            Some(f64) => f64,
+            None => 0.0
+        };
+        if item1 == item2 {
+            stack.push(1.0);
+        }
+        else {
+            stack.push(0.0);
+        }
+    }
+    return stack;
+}
+
+fn diff(mut stack : Vec<f64>) -> Vec<f64> {
+    if (stack.len() > 1) {
+        let item1 : f64 = match stack.pop() {
+            Some(f64) => f64,
+            None => 0.0
+        };
+        let item2 : f64 = match stack.pop() {
+            Some(f64) => f64,
+            None => 0.0
+        };
+        if item1 != item2 {
+            stack.push(1.0);
+        }
+        else {
+            stack.push(0.0);
+        }
+    }
+    return stack;
+}
+
+fn lt(mut stack : Vec<f64>) -> Vec<f64> {
+    if (stack.len() > 1) {
+        let item1 : f64 = match stack.pop() {
+            Some(f64) => f64,
+            None => 0.0
+        };
+        let item2 : f64 = match stack.pop() {
+            Some(f64) => f64,
+            None => 0.0
+        };
+        if item1 > item2 {
+            stack.push(1.0);
+        }
+        else {
+            stack.push(0.0);
+        }
+    }
+    return stack;
+}
+
+fn lte(mut stack : Vec<f64>) -> Vec<f64> {
+    if (stack.len() > 1) {
+        let item1 : f64 = match stack.pop() {
+            Some(f64) => f64,
+            None => 0.0
+        };
+        let item2 : f64 = match stack.pop() {
+            Some(f64) => f64,
+            None => 0.0
+        };
+        if item1 >= item2 {
+            stack.push(1.0);
+        }
+        else {
+            stack.push(0.0);
+        }
+    }
+    return stack;
+}
+
+fn gt(mut stack : Vec<f64>) -> Vec<f64> {
+    if (stack.len() > 1) {
+        let item1 : f64 = match stack.pop() {
+            Some(f64) => f64,
+            None => 0.0
+        };
+        let item2 : f64 = match stack.pop() {
+            Some(f64) => f64,
+            None => 0.0
+        };
+        if item1 < item2 {
+            stack.push(1.0);
+        }
+        else {
+            stack.push(0.0);
+        }
+    }
+    return stack;
+}
+
+fn gte(mut stack : Vec<f64>) -> Vec<f64> {
+    if (stack.len() > 1) {
+        let item1 : f64 = match stack.pop() {
+            Some(f64) => f64,
+            None => 0.0
+        };
+        let item2 : f64 = match stack.pop() {
+            Some(f64) => f64,
+            None => 0.0
+        };
+        if item1 <= item2 {
+            stack.push(1.0);
+        }
+        else {
+            stack.push(0.0);
+        }
+    }
+    return stack;
+}
+
+fn and(mut stack : Vec<f64>) -> Vec<f64> {
+    if (stack.len() > 1) {
+        let item1 : f64 = match stack.pop() {
+            Some(f64) => f64,
+            None => 0.0
+        };
+        let item2 : f64 = match stack.pop() {
+            Some(f64) => f64,
+            None => 0.0
+        };
+        let result = if item1!=0.0 && !item1.is_nan()  {item1} else {item2};
+        stack.push(result)
+    }
+    return stack;
+}
+
+fn or(mut stack : Vec<f64>) -> Vec<f64> {
+    if (stack.len() > 1) {
+        let item1 : f64 = match stack.pop() {
+            Some(f64) => f64,
+            None => 0.0
+        };
+        let item2 : f64 = match stack.pop() {
+            Some(f64) => f64,
+            None => 0.0
+        };
+        let result = if item1!=0.0 && !item1.is_nan()  {item2} else {item1};
+        stack.push(result)
+    }
+    return stack;
+}
+
+fn not(mut stack : Vec<f64>) -> Vec<f64> {
+    if (stack.len() > 1) {
+        let item1 : f64 = match stack.pop() {
+            Some(f64) => f64,
+            None => 0.0
+        };
+        let result: f64 = if item1==0.0 && item1.is_nan()  {0.0} else {1.0};
+        stack.push(result)
+    }
     return stack;
 }
