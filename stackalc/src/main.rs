@@ -1,11 +1,24 @@
-let mut stack : Vec<f64> = Vec::new();
-let mut operations: [&str; 5] = ["SUB", "ADD", "MULT", "RET", "DIV"];
+use std::collections::HashMap;
+use std::io::{self, BufRead};
+use std::*;
+
 
 fn main() {
+    let mut operations: HashMap<&str, fn(Vec<f64>) -> Vec<f64>> = HashMap::new();
+    operations.insert("ADD", add);
+    operations.insert("SUB", sub);
+    operations.insert("MULT", mult);
+    operations.insert("DIV", div);
+    operations.insert("RET", ret);
 
+    let result = operations.contains_key("ADD");
+
+    stackalc();
 }
-fn stackalc() {
 
+
+fn stackalc() {
+    let mut vec : Vec<f64> = Vec::new();
     let mut lines = io::stdin().lock().lines();
     while let Some(line) = lines.next() {
         let last_input = line.unwrap();
@@ -24,6 +37,7 @@ fn stackalc() {
         }
     }
 }
+
 
 fn add(mut stack : Vec<f64>) -> Vec<f64> {
     if (stack.len() > 1) {
