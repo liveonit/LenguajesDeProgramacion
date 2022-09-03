@@ -274,7 +274,7 @@ fn not(mut stack : Vec<f64>) -> Vec<f64> {
             Some(f64) => f64,
             None => 0.0
         };
-        let result: f64 = if item1==0.0 && item1.is_nan()  {0.0} else {1.0};
+        let result: f64 = if item1==0.0 && !item1.is_nan()  {0.0} else {1.0};
         stack.push(result)
     }
     return stack;
