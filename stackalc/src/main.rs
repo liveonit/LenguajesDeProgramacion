@@ -28,6 +28,7 @@ fn main() {
 
 fn stackalc(operations: HashMap<&str, fn(Vec<f64>) -> Vec<f64>>) {
     let mut stack : Vec<f64> = Vec::new();
+    let mut variables: [f64; 10] = [f64::NAN; 10];
     let mut lines = io::stdin().lock().lines();
     while let Some(line) = lines.next() {
         let last_input = line.unwrap();
