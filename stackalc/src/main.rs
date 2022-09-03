@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use std::io::{self, BufRead};
 use std::*;
+use std::process::exit;
 
 
 fn main() {
@@ -22,7 +23,8 @@ fn stackalc(operations: HashMap<&str, fn(Vec<f64>) -> Vec<f64>>) {
         let last_input = line.unwrap();
         // stop storing the user input
         if last_input.len() == 0 {
-            continue;
+          println!("{:?}", stack);
+          exit(0);
         } else {
             for val in last_input.split_whitespace() {
                 if operations.contains_key(val) {
