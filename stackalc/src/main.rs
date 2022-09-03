@@ -11,28 +11,27 @@ fn main() {
     operations.insert("DIV", div);
     operations.insert("RET", ret);
 
-    let result = operations.contains_key("ADD");
-
-    stackalc();
+    stackalc(operations);
 }
 
 
-fn stackalc() {
-    let mut vec : Vec<f64> = Vec::new();
+fn stackalc(operations: HashMap<&str, fn(Vec<f64>) -> Vec<f64>>) {
+    let mut stack : Vec<f64> = Vec::new();
     let mut lines = io::stdin().lock().lines();
     while let Some(line) = lines.next() {
         let last_input = line.unwrap();
         // stop storing the user input
         if last_input.len() == 0 {
-            let item : f64 = match vec.pop() {
-                Some(f64) => f64,
-                None => break
-            };
-            println!("{:?}" , item);
+            continue;
         } else {
-            for num in last_input.split_whitespace() {
-                let n:f64 = num.parse().unwrap();
-                vec.push(n);
+            for val in last_input.split_whitespace() {
+                if operations.contains_key(val) {
+                    let op = operations[val];
+                    stack = op(stack);
+                } else {
+                  let n:f64 = val.parse().unwrap();
+                  stack.push(n);
+                }
             }
         }
     }
