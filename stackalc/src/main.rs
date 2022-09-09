@@ -106,7 +106,6 @@ fn div(mut stack : Vec<f64>, variables: [f64; 10], _n: usize) -> (Vec<f64>, [f64
         stack.push(result)
     }
     return (stack, variables);
-
 }
 
 fn sub(mut stack : Vec<f64>, variables: [f64; 10], _n: usize) -> (Vec<f64>, [f64; 10]) {
@@ -123,7 +122,6 @@ fn sub(mut stack : Vec<f64>, variables: [f64; 10], _n: usize) -> (Vec<f64>, [f64
         stack.push(result)
     }
     return (stack, variables);
-
 }
 
 fn eq(mut stack : Vec<f64>, variables: [f64; 10], _n: usize) -> (Vec<f64>, [f64; 10]) {
@@ -279,12 +277,12 @@ fn or(mut stack : Vec<f64>, variables: [f64; 10], _n: usize) -> (Vec<f64>, [f64;
 }
 
 fn not(mut stack : Vec<f64>, variables: [f64; 10], _n: usize) -> (Vec<f64>, [f64; 10]) {
-    if stack.len() > 1 {
+    if stack.len() > 0 {
         let item1 : f64 = match stack.pop() {
             Some(f64) => f64,
             None => 0.0
         };
-        let result: f64 = if item1==0.0 && !item1.is_nan()  {0.0} else {1.0};
+        let result: f64 = if item1==0.0 {1.0} else {0.0};
         stack.push(result)
     }
     return (stack, variables);
