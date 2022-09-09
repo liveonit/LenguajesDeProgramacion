@@ -1,0 +1,66 @@
+8 DUP UJP:+3 3 4
+Variables [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
+Stack [8.0, 8.0]
+
+1 CJP:+2 2 3
+Variables [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
+Stack [8.0, 8.0, 3.0]
+
+0 CJP:+2 3 2
+Variables [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
+Stack [8.0, 8.0, 3.0, 3.0, 2.0]
+
+
+// ====== Ejemplo de resta recursiva =====
+2 1 SUB DUP CJP:-3
+Counter: 1
+Stack: [2.0]
+Variables [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
+Counter: 2
+Stack: [2.0, 1.0]
+Variables [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
+Counter: 3
+Stack: [1.0]
+Variables [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
+Counter: 4
+Stack: [1.0, 1.0]
+Variables [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
+Counter: 1
+Stack: [1.0]
+Variables [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
+Counter: 2
+Stack: [1.0, 1.0]
+Variables [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
+Counter: 3
+Stack: [0.0]
+Variables [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
+Counter: 4
+Stack: [0.0, 0.0]
+Variables [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
+Counter: 5
+Stack: [0.0]
+Variables [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
+
+
+// ==== Suma simple con UJP ====
+1 2 ADD DUP UJP:3 3 4 ADD
+Stack: [6.0]
+Variables [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
+
+// ==== Suma condicional con condicion falsa ===
+1 2 ADD 0 CJP:+2 3 ADD
+Stack: [6.0]
+Variables [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
+
+
+// ==== Vaciar el stack con POP ====
+0 1 2 3 4 5 POP CJP:-1
+Stack: []
+Variables [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
+
+// === Concatenacion de CJP ====
+0 1 2 3 4 5 POP CJP:-1 1 2 ADD 0 CJP:+2 3 ADD
+Stack: [6.0]
+Variables [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
+
+
