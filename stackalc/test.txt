@@ -64,3 +64,11 @@ Stack: [6.0]
 Variables [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
 
 
+/=== Multiplicación con UJP ===
+2 3 UJP:+2 1 MULT        
+
+Stack: [6.0]
+Variables [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
+
+
+
