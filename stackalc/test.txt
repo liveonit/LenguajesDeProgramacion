@@ -70,5 +70,9 @@ Variables [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
 Stack: [6.0]
 Variables [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
 
+/=== División con Suma con UJP y equals
+5 4 2 DIV ADD UJP:+2 5 7 EQ  
 
+Stack: [1.0]
+Variables [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
 
