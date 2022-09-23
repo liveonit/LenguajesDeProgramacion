@@ -18,7 +18,7 @@ stringify json = putStrLn (stringifyAux json)
 stringifyAux :: JSON -> String
 stringifyAux ValueNull = "null"
 stringifyAux (ValueString s) = "\"" ++ s ++ "\""
-stringifyAux (ValueBool b) = show b
+stringifyAux (ValueBool b) = if b then "true" else "false"
 stringifyAux (ValueDouble d) = show d
 stringifyAux (Array vs) = "[" ++ intercalate "," [stringifyAux v | v <- vs] ++ "]"
 stringifyAux (Object ps) = "{" ++ intercalate "," ["\"" ++ x ++ "\"" ++ ":" ++ stringifyAux y | (x,y) <- ps] ++ "}"
