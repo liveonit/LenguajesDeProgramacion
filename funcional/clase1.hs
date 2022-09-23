@@ -1,3 +1,5 @@
+import Data.List
+
 allEqual :: (Eq a) => [a] -> Bool
 allEqual xs
   | length(xs) == 0 = error "Lista vacia"
@@ -10,14 +12,13 @@ data JSON = ValueNull | ValueString String | ValueBool Bool | ValueDouble Double
 
 -- (Object [("menu", (Object [("id", ValueString "file"), ("value", ValueString "File"), ("popup", Object [("menuitem", Array [(Object [("value", ValueString "New"),("onclick", ValueString "CreateNewDoc()")]), (Object [("value", ValueString "Open"),("onclick", ValueString "OpenDoc()")]), (Object [("value", ValueString "Close"),("onclick", ValueString "CloseDoc()")])])])]))])
 
-stringify :: JSON -> String
-stringify ValueNull = "null"
-stringify (ValueString s) = s
-stringify (ValueBool b) = show b
-stringify (ValueDouble d) = show d
-stringify (Array vs) = "[" ++ aux [stringify v | v <- vs] ++ "]"
-stringify (Object ps) = "{" ++ aux [x ++ ":" ++ stringify y | (x,y) <- ps] ++ "}"
+stringify :: JSON -> IO()
+stringify json = putStrLn (stringifyAux json)
 
-aux :: [String] -> String
-aux (x:xs) = x ++ "," ++ (aux xs)
-aux _ = ""
+stringifyAux :: JSON -> String
+stringifyAux ValueNull = "null"
+stringifyAux (ValueString s) = "\"" ++ s ++ "\""
+stringifyAux (ValueBool b) = show b
+stringifyAux (ValueDouble d) = show d
+stringifyAux (Array vs) = "[" ++ intercalate "," [stringifyAux v | v <- vs] ++ "]"
+stringifyAux (Object ps) = "{" ++ intercalate "," ["\"" ++ x ++ "\"" ++ ":" ++ stringifyAux y | (x,y) <- ps] ++ "}"
