@@ -42,7 +42,7 @@ evalProcedure env exp = case eval env exp of
   _ -> error ("Expected procedure for "++ (show exp) ++"!")
 
 aor :: Procedure -> Procedure
-aor p env args = p env (map (eval env) args) 
+aor p env args = p env (map (eval env) args)
 
 procAdd :: Procedure
 procAdd = aor (\_ [SchemyNumber n1, SchemyNumber n2] -> SchemyNumber (n1 + n2))

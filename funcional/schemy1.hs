@@ -9,7 +9,10 @@ basicEnv = fromList [ ("pi", SchemyNumber pi),
                       ("/", SchemyProcedure divProc),
                       ("<", SchemyProcedure lessProc),
                       ("||", SchemyProcedure orProc),
-                      ("&&", SchemyProcedure andProc)]
+                      ("&&", SchemyProcedure andProc),
+                      ("==", SchemyProcedure equalProc),
+                      ("<=", SchemyProcedure lessOrEqualProc),
+                      ("not", SchemyProcedure notProc)]
 
 type SchemyEnv = Map String SchemyExp
 type Procedure = SchemyEnv -> [SchemyExp] -> SchemyExp
@@ -32,7 +35,7 @@ handleForm:: SchemyEnv -> SchemyExp -> [SchemyExp] -> SchemyExp
 handleForm env (SchemyProcedure procedure) xs = (aor procedure) env xs
 
 aor :: Procedure -> Procedure
-aor p env args = p env (map (eval env) args) 
+aor p env args = p env (map (eval env) args)
 
 instance Show SchemyExp where
   show (SchemyBool b) = "(SchemyBool "++ (show b) ++")"
@@ -45,7 +48,7 @@ instance Show SchemyExp where
 
 addProc :: Procedure
 addProc env [(SchemyNumber a), (SchemyNumber b)] = SchemyNumber (a + b)
-addProc env ((SchemyNumber x) : (SchemyNumber y) : xs) = addProc env ([SchemyNumber (x + y)] ++ xs)
+addProc env ((SchemyNumber x) : (SchemyNumber y) : xs) =  addProc env ([SchemyNumber (x + y)] ++ xs)
 addProc _  _= error "!"
 
 subProc :: Procedure
@@ -62,6 +65,10 @@ lessProc :: Procedure
 lessProc env ((SchemyNumber x) : (SchemyNumber y) : xs) = if (x<y) then SchemyBool True else SchemyBool False
 lessProc _  _= error "!"
 
+lessOrEqualProc :: Procedure
+lessOrEqualProc env ((SchemyNumber x) : (SchemyNumber y) : xs) = if (x <= y) then SchemyBool True else SchemyBool False
+lessOrEqualProc _ _ = error "!"
+
 orProc :: Procedure
 orProc env [(SchemyBool a), (SchemyBool b)] = SchemyBool (a || b)
 orProc env ((SchemyBool x) : (SchemyBool y) : xs) = orProc env ([SchemyBool (x || y)] ++ xs)
@@ -71,6 +78,16 @@ andProc :: Procedure
 andProc env [(SchemyBool a), (SchemyBool b)] = SchemyBool (a && b)
 andProc env ((SchemyBool x) : (SchemyBool y) : xs) = andProc env ([SchemyBool (x && y)] ++ xs)
 andProc _  _= error "!"
+
+equalProc :: Procedure
+equalProc env ((SchemyBool x) : (SchemyBool y) : xs) = SchemyBool (x == y)
+equalProc env ((SchemyNumber x) : (SchemyNumber y) : xs) = SchemyBool (x == y)
+equalProc _ _ = error "!"
+
+notProc :: Procedure
+notProc env [(SchemyBool x)] = SchemyBool (not x)
+notProc _ _ = error "!"
+
 -- Syntax ----------------------------------------------------------------------
 unparse :: SchemyExp -> String
 unparse (SchemyBool b) = if b then "true" else "false"
