@@ -62,8 +62,8 @@ orProc env ((SchemyBool x) : (SchemyBool y) : xs) = SchemyBool (x || y)
 orProc _  _= error "!"
 
 andProc :: Procedure
-orProc env ((SchemyBool x) : (SchemyBool y) : xs) = SchemyBool (x && y)
-orProc _  _= error "!"
+andProc env ((SchemyBool x) : (SchemyBool y) : xs) = SchemyBool (x && y)
+andProc _  _= error "!"
 -- Syntax ----------------------------------------------------------------------
 
 unparse :: SchemyExp -> String
