@@ -5,6 +5,7 @@ import Text.Read (readMaybe)
 
 basicEnv = fromList [ ("pi", SchemyNumber pi),
                       ("+", SchemyProcedure addProc),
+                      ("*", SchemyProcedure multProc),
                       ("-", SchemyProcedure subProc),
                       ("/", SchemyProcedure divProc),
                       ("<", SchemyProcedure lessProc),
@@ -50,6 +51,11 @@ addProc :: Procedure
 addProc env [(SchemyNumber a), (SchemyNumber b)] = SchemyNumber (a + b)
 addProc env ((SchemyNumber x) : (SchemyNumber y) : xs) =  addProc env ([SchemyNumber (x + y)] ++ xs)
 addProc _  _= error "!"
+
+multProc :: Procedure
+multProc env [(SchemyNumber a), (SchemyNumber b)] = SchemyNumber (a * b)
+multProc env ((SchemyNumber x) : (SchemyNumber y) : xs) =  multProc env ([SchemyNumber (x * y)] ++ xs)
+multProc _  _= error "!"
 
 subProc :: Procedure
 subProc env [(SchemyNumber a), (SchemyNumber b)] = SchemyNumber (a - b)
@@ -133,7 +139,7 @@ repl :: IO ()
 repl = do
   line <- getLine
   if not (all isSpace line) then do
-    --putStrLn (show (parse line)) -- Show the parse result
+    putStrLn (show (parse line)) -- Show the parse result
     -- putStrLn (unparse (parse line)) -- Echo the code
     putStrLn (unparse (eval basicEnv (parse line))) -- Print the evaluation
     repl
