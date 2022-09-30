@@ -1,7 +1,15 @@
-import Data.Map.Strict (Map, fromList)
-import Data.Map ((!))
+import Data.Char (isDigit, isSpace)
+import Data.List (intercalate)
+import Data.Map.Strict (Map, fromList, (!))
+import Text.Read (readMaybe)
 
-basicEnv = fromList [("+", SchemyProcedure addProc),("-", SchemyProcedure subProc),("/", SchemyProcedure divProc),("<", SchemyProcedure lessProc),("||", SchemyProcedure orProc)]
+basicEnv = fromList [ ("pi", SchemyNumber pi),
+                      ("+", SchemyProcedure addProc),
+                      ("-", SchemyProcedure subProc),
+                      ("/", SchemyProcedure divProc),
+                      ("<", SchemyProcedure lessProc),
+                      ("||", SchemyProcedure orProc),
+                      ("&&", SchemyProcedure andProc)]
 
 type SchemyEnv = Map String SchemyExp
 type Procedure = SchemyEnv -> [SchemyExp] -> SchemyExp
@@ -52,3 +60,60 @@ lessProc _  _= error "!"
 orProc :: Procedure
 orProc env ((SchemyBool x) : (SchemyBool y) : xs) = SchemyBool (x || y)
 orProc _  _= error "!"
+
+andProc :: Procedure
+orProc env ((SchemyBool x) : (SchemyBool y) : xs) = SchemyBool (x && y)
+orProc _  _= error "!"
+-- Syntax ----------------------------------------------------------------------
+
+unparse :: SchemyExp -> String
+unparse (SchemyBool b) = if b then "true" else "false"
+unparse (SchemyNumber d) = show d
+unparse (SchemySymbol s) = s
+unparse (SchemyForm f args) = "("++ (intercalate " " (map unparse (f:args))) ++")"
+unparse (SchemyProcedure _) = error "Cannot unparse procedures!"
+
+mayParse :: String -> Maybe (SchemyExp, String)
+mayParse input
+  | input == "" = Nothing
+  | isSpace (head input) = mayParse (tail input)
+  | (head input) == '(' = mayParseForm [] (tail input)
+  | otherwise = if (token == "true") then Just (SchemyBool True, rest)
+    else if (token == "false") then Just (SchemyBool False, rest)
+    else case readMaybe token of
+      Just n -> Just (SchemyNumber n, rest)
+      _ -> Just (SchemySymbol token, rest)
+  where token = takeWhile (\s -> notElem s " ()\f\n\r\t") input
+        rest = drop (length token) input
+
+mayParseForm :: [SchemyExp] -> String -> Maybe (SchemyExp, String)
+mayParseForm list input
+  | input == "" = Nothing
+  | isSpace (head input) = mayParseForm list (tail input)
+  | (head input) == ')'  = Just (SchemyForm (head list) (tail list), (tail input))
+  | otherwise = case mayParse input of
+    Just (exp, rest) -> mayParseForm (list ++ [exp]) rest
+    _ -> Nothing
+
+parse :: String -> SchemyExp
+parse input = case mayParse input of
+  Just (exp, rest) | all isSpace rest -> exp
+  _ -> error "Parse error!"
+
+-- Main ------------------------------------------------------------------------
+
+main :: IO ()
+main = do
+  putStrLn "Welcome to Schemy REPL. Input an blank line to exit."
+  repl
+
+repl :: IO ()
+repl = do
+  line <- getLine
+  if not (all isSpace line) then do
+    --putStrLn (show (parse line)) -- Show the parse result
+    -- putStrLn (unparse (parse line)) -- Echo the code
+    putStrLn (unparse (eval basicEnv (parse line))) -- Print the evaluation
+    repl
+  else
+    return ()
