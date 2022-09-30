@@ -22,12 +22,16 @@ data SchemyExp = SchemyNumber Double
 
 eval :: SchemyEnv -> SchemyExp -> SchemyExp
 eval env (SchemyNumber a) = (SchemyNumber a)
+eval env (SchemySymbol a) = (env ! a)
 eval env (SchemyBool a) = (SchemyBool a)
 eval env (SchemyForm (SchemySymbol s) arrExp) = handleForm env proc arrExp
   where proc = (env ! s)
 
 handleForm:: SchemyEnv -> SchemyExp -> [SchemyExp] -> SchemyExp
-handleForm env (SchemyProcedure procedure) xs = procedure env xs
+handleForm env (SchemyProcedure procedure) xs = (aor procedure) env xs
+
+aor :: Procedure -> Procedure
+aor p env args = p env (map (eval env) args) 
 
 instance Show SchemyExp where
   show (SchemyBool b) = "(SchemyBool "++ (show b) ++")"
@@ -65,7 +69,6 @@ andProc :: Procedure
 andProc env ((SchemyBool x) : (SchemyBool y) : xs) = SchemyBool (x && y)
 andProc _  _= error "!"
 -- Syntax ----------------------------------------------------------------------
-
 unparse :: SchemyExp -> String
 unparse (SchemyBool b) = if b then "true" else "false"
 unparse (SchemyNumber d) = show d
