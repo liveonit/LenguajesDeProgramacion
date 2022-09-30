@@ -26,6 +26,7 @@ eval env (SchemySymbol a) = (env ! a)
 eval env (SchemyBool a) = (SchemyBool a)
 eval env (SchemyForm (SchemySymbol s) arrExp) = handleForm env proc arrExp
   where proc = (env ! s)
+eval _ _ = error "!"
 
 handleForm:: SchemyEnv -> SchemyExp -> [SchemyExp] -> SchemyExp
 handleForm env (SchemyProcedure procedure) xs = (aor procedure) env xs
@@ -62,11 +63,13 @@ lessProc env ((SchemyNumber x) : (SchemyNumber y) : xs) = if (x<y) then SchemyBo
 lessProc _  _= error "!"
 
 orProc :: Procedure
-orProc env ((SchemyBool x) : (SchemyBool y) : xs) = SchemyBool (x || y)
+orProc env [(SchemyBool a), (SchemyBool b)] = SchemyBool (a || b)
+orProc env ((SchemyBool x) : (SchemyBool y) : xs) = orProc env ([SchemyBool (x || y)] ++ xs)
 orProc _  _= error "!"
 
 andProc :: Procedure
-andProc env ((SchemyBool x) : (SchemyBool y) : xs) = SchemyBool (x && y)
+andProc env [(SchemyBool a), (SchemyBool b)] = SchemyBool (a && b)
+andProc env ((SchemyBool x) : (SchemyBool y) : xs) = andProc env ([SchemyBool (x && y)] ++ xs)
 andProc _  _= error "!"
 -- Syntax ----------------------------------------------------------------------
 unparse :: SchemyExp -> String
@@ -75,7 +78,6 @@ unparse (SchemyNumber d) = show d
 unparse (SchemySymbol s) = s
 unparse (SchemyForm f args) = "("++ (intercalate " " (map unparse (f:args))) ++")"
 unparse (SchemyProcedure _) = error "Cannot unparse procedures!"
-
 mayParse :: String -> Maybe (SchemyExp, String)
 mayParse input
   | input == "" = Nothing
