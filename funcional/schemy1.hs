@@ -58,11 +58,13 @@ lessProc env ((SchemyNumber x) : (SchemyNumber y) : xs) = if (x<y) then SchemyBo
 lessProc _  _= error "!"
 
 orProc :: Procedure
-orProc env ((SchemyBool x) : (SchemyBool y) : xs) = SchemyBool (x || y)
+orProc env [(SchemyBool a), (SchemyBool b)] = SchemyBool (a || b)
+orProc env ((SchemyBool x) : (SchemyBool y) : xs) = orProc env ([SchemyBool (x || y)] ++ xs)
 orProc _  _= error "!"
 
 andProc :: Procedure
-andProc env ((SchemyBool x) : (SchemyBool y) : xs) = SchemyBool (x && y)
+andProc env [(SchemyBool a), (SchemyBool b)] = SchemyBool (a && b)
+andProc env ((SchemyBool x) : (SchemyBool y) : xs) = andProc env ([SchemyBool (x && y)] ++ xs)
 andProc _  _= error "!"
 -- Syntax ----------------------------------------------------------------------
 
