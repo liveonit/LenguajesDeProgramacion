@@ -5,5 +5,4 @@ language(ut4, ruby).
 language(ut5, javascript).
 
 /* F=0 */ factorial(0, 1).
-/* F=1 */ factorial(1, 1).
-/* F=N */ factorial(X, F) :- Z is X-1,factorial(Z,Y), F is X * Y.
+/* F=N */ factorial(X, F) :- X > 0, Z is X-1,factorial(Z,Y), F is X * Y.
