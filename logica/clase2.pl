@@ -23,6 +23,12 @@ bicond(true,false,false).
 bicond(false,true,false).
 bicond(false,false,true).
 
+% Tendria que agregar la definicion de XOR
+xor(true, true, false).
+xor(true, false, true).
+xor(false, true, true).
+xor(false, false, false).
+
 truthTable(not(X),Y) :- not(X, Y).
 truthTable(and(X,Z),Y) :- and(X, Z, Y).
 truthTable(or(X,Z),Y) :- and(X, Z, Y).
@@ -39,5 +45,10 @@ propEval(or(P1, P2), A, R) :- propEval(P1, A, R1),  propEval(P2, A, R2), or(R1, 
 propEval(cond(P1, P2), A, R) :- propEval(P1, A, R1),  propEval(P2, A, R2), cond(R1, R2, R).
 propEval(bicond(P1, P2), A, R) :- propEval(P1, A, R1),  propEval(P2, A, R2), bicond(R1, R2, R).
 
+% Y su correspondiente propEval
+propEval(xor(P1, P2), A, R) :- propEval(P1, A, R1),  propEval(P2, A, R2), xor(R1, R2, R).
 
 propEval(propVar(V), A, R) :- get_assoc(V, A, R).
+
+% assign(A), propEval(and(propVar("t"),false),A,R). Retorna R=false
+% assign(A), propEval(not(not(propVar("t"))),A,R).  Retorna R=true
