@@ -1,4 +1,4 @@
-# Expressions __________________________________________________________________
+# Expressions ______________________
 
 # Base class for representations of expression of any kind.
 class Expression
@@ -24,10 +24,13 @@ class VariableExp < Expression
   def unparse()
     "#{@identifier}"
   end
+  def evaluate()
+    return @identifier
+  end
   attr_reader :identifier
 end
 
-# Arithmetic expressions _______________________________________________________
+# Arithmetic expressions ___________________
 
 # Representation of numerals (i.e. numerical literals), e.g. `(123)`.
 class Numeral < Expression
@@ -42,7 +45,7 @@ class Numeral < Expression
   end
 
   def evaluate(state = {})
-    @value
+     @value
   end
 end
 
@@ -54,6 +57,9 @@ class Minus < Expression
 
   def unparse()
     "-#{@right.unparse}"
+  end
+  def evaluate(state = {})
+    -right.evaluate(state)
   end
 
   attr_reader :right
@@ -69,6 +75,9 @@ class Addition < Expression
   def unparse()
     "(#{@left.unparse}+#{@right.unparse})"
   end
+  def evaluate(state = {})
+    left.evaluate(state)+right.evaluate(state)
+  end
   attr_reader :left
   attr_reader :right
 end
@@ -80,8 +89,8 @@ class Subtraction < Expression
     @right = right
   end
 
-  def unparse()
-    "(#{@left.unparse}-#{@right.unparse})"
+  def unparse(state = {})
+    left.evaluate(state)-right.evaluate(state)
   end
 
   attr_reader :left
@@ -97,7 +106,11 @@ class Multiplication < Expression
 
   def unparse()
     "(#{@left.unparse}*#{@right.unparse})"
-  end
+ end
+
+ def evaluate(state = {})
+  left.evaluate(state)*right.evaluate(state)
+ end
 
   attr_reader :left
   attr_reader :right
@@ -113,12 +126,15 @@ class Division < Expression
   def unparse()
     "(#{@left.unparse}/#{@right.unparse})"
   end
+  def evaluate(state = {})
+    left.evaluate(state)/right.evaluate(state)
+   end
 
   attr_reader :left
   attr_reader :right
 end
 
-# Comparisons __________________________________________________________________
+# Comparisons ______________________
 
 # Representation of comparison by equal, like `(left == right)`.
 class ComparisonEqual < Expression
@@ -128,7 +144,11 @@ class ComparisonEqual < Expression
   end
 
   def unparse()
-    "(#{@left.unparse}==#{@right.unparse})"
+    "(#{left.unparse} == #{right.unparse})"
+  end
+
+  def evaluate(state = {})
+    left.evaluate(state) == right.evaluate(state)
   end
 
   attr_reader :left
@@ -143,7 +163,11 @@ class ComparisonDifferent < Expression
   end
 
   def unparse()
-    "(#{@left.unparse}!=#{@right.unparse})"
+    "(#{left.unparse} != #{right.unparse})"
+  end
+
+  def evaluate(state = {})
+    left.evaluate(state) != right.evaluate(state)
   end
 
   attr_reader :left
@@ -158,7 +182,11 @@ class ComparisonLessThan < Expression
   end
 
   def unparse()
-    "(#{@left.unparse}<#{@right.unparse})"
+    "(#{left.unparse} < #{right.unparse})"
+  end
+
+  def evaluate(state = {})
+    left.evaluate(state) < right.evaluate(state)
   end
 
   attr_reader :left
@@ -173,7 +201,11 @@ class ComparisonLessThanOrEqual < Expression
   end
 
   def unparse()
-    "(#{@left.unparse}<=#{@right.unparse})"
+    "(#{left.unparse} <= #{right.unparse})"
+  end
+
+  def evaluate(state = {})
+    left.evaluate(state) <= right.evaluate(state)
   end
 
   attr_reader :left
@@ -188,7 +220,11 @@ class ComparisonGreaterThan < Expression
   end
 
   def unparse()
-    "(#{@left.unparse}>#{@right.unparse})"
+    "(#{left.unparse} > #{right.unparse})"
+  end
+
+  def evaluate(state = {})
+    left.evaluate(state) > right.evaluate(state)
   end
 
   attr_reader :left
@@ -203,14 +239,18 @@ class ComparisonGreaterThanOrEqual < Expression
   end
 
   def unparse()
-    "(#{@left.unparse}>=#{@right.unparse})"
+    "(#{right.unparse} >= #{right.unparse})"
+  end
+
+  def evaluate(state = {})
+    left.evaluate(state) >= right.evaluate(state)
   end
 
   attr_reader :left
   attr_reader :right
 end
 
-# Boolean expressions __________________________________________________________
+# Boolean expressions ____________________
 
 # Representation of boolean literals, e.g. `(true)`.
 class TruthValue < Expression
@@ -221,7 +261,7 @@ class TruthValue < Expression
   attr_reader :value
 
   def unparse()
-    "#{@value}"
+    "#{value}"
   end
 
   def evaluate(state = {})
@@ -236,8 +276,13 @@ class Negation < Expression
   end
 
   def unparse()
-    "!#{@right}"
+    "(!#{right.unparse})"
   end
+
+  def evaluate(state = {})
+    !right.evaluate(state)
+  end
+
   attr_reader :right
 end
 
@@ -249,7 +294,11 @@ class LogicalAnd < Expression
   end
 
   def unparse()
-    "(#{@left.unparse}&&#{@right.unparse})"
+    "(#{left.unparse} && #{right.unparse} )"
+  end
+
+  def evaluate(state = {})
+    left.evaluate(state) && right.evaluate(state)
   end
 
   attr_reader :left
@@ -264,7 +313,11 @@ class LogicalOr < Expression
   end
 
   def unparse()
-    "(#{@left.unparse}||#{@right.unparse})"
+    "(#{left.unparse} || #{right.unparse} )"
+  end
+
+  def evaluate(state = {})
+    left.evaluate(state) || right.evaluate(state)
   end
 
   attr_reader :left

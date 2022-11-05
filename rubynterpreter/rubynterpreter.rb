@@ -18,6 +18,7 @@ ARGF.each do |line|
       begin
         ast = parser.parse_string(code)
         puts ast.unparse
+        puts ast.evaluate
       rescue => error
         STDERR.puts "#{error.class}: #{error.message}"
       ensure
