@@ -89,7 +89,10 @@ class WhileDo < Statement
   end
 
   def evaluate(state = {})
-    if condition.evaluate(state) then body.evaluate(state) end
+    if condition.evaluate(state) then 
+      body.evaluate(state) 
+      WhileDo.new(condition,body).evaluate(state)
+    end
     state
   end
   attr_reader :condition
