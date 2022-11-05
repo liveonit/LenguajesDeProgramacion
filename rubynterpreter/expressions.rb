@@ -89,7 +89,10 @@ class Subtraction < Expression
     @right = right
   end
 
-  def unparse(state = {})
+  def unparse()
+    "(#{@left.unparse}-#{@right.unparse})"
+  end
+  def evaluate(state = {})
     left.evaluate(state)-right.evaluate(state)
   end
 
@@ -255,7 +258,7 @@ end
 # Representation of boolean literals, e.g. `(true)`.
 class TruthValue < Expression
   def initialize(value)
-    @value = !!(value)
+    @value = value == 'true'
   end
 
   attr_reader :value
