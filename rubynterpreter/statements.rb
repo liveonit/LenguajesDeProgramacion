@@ -91,7 +91,7 @@ class WhileDo < Statement
   def evaluate(state = {})
     if condition.evaluate(state) then 
       body.evaluate(state) 
-      WhileDo.new(condition,body).evaluate(state)
+      self.evaluate(state)
     end
     state
   end
