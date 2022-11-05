@@ -28,6 +28,11 @@ class Assignment < Statement
     "(#{@identifier}=#{@expression.unparse})"
   end
 
+  def evaluate(state = {})
+    @state[identifier]= expression.unparse(state)
+    state
+  end
+
   attr_reader :identifier
   attr_reader :expression
 end
@@ -40,6 +45,11 @@ class Block < Statement
 
   def unparse()
     "#{@statements.map { |expression| expression.unparse }}"
+  end
+
+  def evaluate(state = {})
+    @statements.map { |expression| expression.evaluate(state) }
+    state
   end
   attr_reader :statements
 end
@@ -54,6 +64,12 @@ class IfThenElse < Statement
 
   def unparse()
     "if #{@condition.unparse} #{@bodyThen.unparse} ; #{@bodyElse.unparse}"
+    state
+  end
+
+  def evaluate(state = {})
+    if condition.evaluate(state) then bodyThen.evaluate(state) else bodyElse.evaluate(state) end
+    state
   end
 
   attr_reader :condition
@@ -72,6 +88,10 @@ class WhileDo < Statement
     "(while #{@condition.unparse} do #{@body.unparse})"
   end
 
+  def evaluate(state = {})
+    if condition.evaluate(state) then body.evaluate(state) end
+    state
+  end
   attr_reader :condition
   attr_reader :body
 end
@@ -84,6 +104,11 @@ class PrintStmt < Statement
 
   def unparse()
     "#{@expression.unparse}"
+  end
+
+  def evaluate(state = {})
+    expression.evaluate(state)
+    state
   end
   attr_reader :expression
 end
