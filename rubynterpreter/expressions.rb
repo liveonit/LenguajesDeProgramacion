@@ -258,7 +258,7 @@ end
 # Representation of boolean literals, e.g. `(true)`.
 class TruthValue < Expression
   def initialize(value)
-    @value = value == 'true'
+    @value = !!value
   end
 
   attr_reader :value

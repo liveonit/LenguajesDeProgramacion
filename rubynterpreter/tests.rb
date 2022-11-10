@@ -63,24 +63,80 @@ class TestSimpleNumber < Test::Unit::TestCase
     end
 
     def test_truth
-        assert_equal(true, TruthValue.new('true').evaluate )
-        assert_equal(false, TruthValue.new('false').evaluate )
+        assert_equal(true, TruthValue.new(true).evaluate )
+        assert_equal(false, TruthValue.new(false).evaluate )
     end
 
     def test_negation
-        assert_equal(false, Negation.new(TruthValue.new('true')).evaluate )
-        assert_equal(true, Negation.new(TruthValue.new('false')).evaluate )
+        assert_equal(false, Negation.new(TruthValue.new(true)).evaluate )
+        assert_equal(true, Negation.new(TruthValue.new(false)).evaluate )
     end
 
     def test_and
-        assert_equal(true, LogicalAnd.new(TruthValue.new('true'), TruthValue.new('true')).evaluate )
-        assert_equal(false, LogicalAnd.new(TruthValue.new('false'), TruthValue.new('true')).evaluate )
+        assert_equal(true, LogicalAnd.new(TruthValue.new(true), TruthValue.new(true)).evaluate )
+        assert_equal(false, LogicalAnd.new(TruthValue.new(false), TruthValue.new(true)).evaluate )
     end
 
     def test_or
-        assert_equal(true, LogicalOr.new(TruthValue.new('true'), TruthValue.new('true')).evaluate )
-        assert_equal(true, LogicalOr.new(TruthValue.new('false'), TruthValue.new('true')).evaluate )
+        assert_equal(true, LogicalOr.new(TruthValue.new(true), TruthValue.new(true)).evaluate )
+        assert_equal(true, LogicalOr.new(TruthValue.new(false), TruthValue.new(true)).evaluate )
     end
+
+    def test_numerical_expression
+        parser = Parser.new
+        ast = parser.parse_string('1 - 2 * 3 + 6 / 2')
+        assert_equal('((1.0-(2.0*3.0))+(6.0/2.0))', ast.unparse )
+        assert_equal(-2.0, ast.evaluate )
+    end
+
+
+    def test_boolean_expression
+        parser = Parser.new
+        ast = parser.parse_string('!true || (!false && true) && 5 < 3')
+        puts ast.unparse
+        puts ast.evaluate
+        assert_equal('((!true) || (((!false) && true ) && (5.0 < 3.0) ) )', ast.unparse )
+        assert_equal(false, ast.evaluate )
+    end
+
+
+    def test_boolean_expression
+        parser = Parser.new
+        ast = parser.parse_string('!true || (!false && true) && 5 < 3')
+        puts ast.unparse
+        puts ast.evaluate
+        assert_equal('((!true) || (((!false) && true ) && (5.0 < 3.0) ) )', ast.unparse )
+        assert_equal(false, ast.evaluate )
+    end
+
+    # def test_assignation_statement
+    #     parser = Parser.new
+    #     ast = parser.parse_string('!true || (!false && true) && 5 < 3')
+    #     puts ast.unparse
+    #     puts ast.evaluate
+    #     assert_equal('((!true) || (((!false) && true ) && (5.0 < 3.0) ) )', ast.unparse )
+    #     assert_equal(false, ast.evaluate )
+    # end
+
+    # def test_if_statement
+    #     parser = Parser.new
+    #     ast = parser.parse_string('!true || (!false && true) && 5 < 3')
+    #     puts ast.unparse
+    #     puts ast.evaluate
+    #     assert_equal('((!true) || (((!false) && true ) && (5.0 < 3.0) ) )', ast.unparse )
+    #     assert_equal(false, ast.evaluate )
+    # end
+
+    # def test_while_statement
+    #     parser = Parser.new
+    #     ast = parser.parse_string('!true || (!false && true) && 5 < 3')
+    #     puts ast.unparse
+    #     puts ast.evaluate
+    #     assert_equal('((!true) || (((!false) && true ) && (5.0 < 3.0) ) )', ast.unparse )
+    #     assert_equal(false, ast.evaluate )
+    # end
+
+
 end
 
 

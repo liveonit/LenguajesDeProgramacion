@@ -44,7 +44,7 @@ rule
     | NUM
       { Numeral.new(val[0]) }
     | BOOL
-      { TruthValue.new(val[0]) }
+      { TruthValue.new(val[0]  == 'true') }
     | '-' exp =UMINUS
       { Minus.new(val[1]) }
     | '!' exp
