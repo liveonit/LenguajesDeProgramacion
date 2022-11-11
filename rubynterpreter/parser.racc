@@ -44,7 +44,12 @@ rule
     | NUM
       { Numeral.new(val[0]) }
     | BOOL
-      { TruthValue.new(val[0]  == 'true') }
+      { if val[0] then
+          TrueValue.instance
+        else
+          FalseValue.instance
+        end
+      }
     | '-' exp =UMINUS
       { Minus.new(val[1]) }
     | '!' exp

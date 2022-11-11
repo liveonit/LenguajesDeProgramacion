@@ -256,19 +256,39 @@ end
 # Boolean expressions ____________________
 
 # Representation of boolean literals, e.g. `(true)`.
-class TruthValue < Expression
-  def initialize(value)
-    @value = !!value
+class TrueValue < Expression
+  @instance = new
+
+  private_class_method :new
+
+  def self.instance
+    @instance
   end
 
-  attr_reader :value
-
   def unparse()
-    "#{value}"
+    "true"
   end
 
   def evaluate(state = {})
-    @value
+    true
+  end
+end
+
+class FalseValue < Expression
+  @instance = new
+
+  private_class_method :new
+
+  def self.instance
+    @instance
+  end
+
+  def unparse()
+    "false"
+  end
+
+  def evaluate(state = {})
+    false
   end
 end
 
