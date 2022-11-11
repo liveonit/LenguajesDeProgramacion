@@ -23,7 +23,7 @@ class Assignment < Statement
     "(#{@identifier}=#{@expression.unparse})"
   end
   def evaluate(state = {})
-    @state[identifier]= expression.unparse(state)
+    state["" + identifier]= expression.evaluate(state)
     state
   end
   attr_reader :identifier
@@ -37,6 +37,7 @@ class Block < Statement
   def unparse()
     "#{@statements.map { |expression| expression.unparse }}"
   end
+  
   def evaluate(state = {})
     @statements.map { |expression| expression.evaluate(state) }
     state
@@ -51,11 +52,18 @@ class IfThenElse < Statement
     @bodyElse = bodyElse
   end
   def unparse()
-    "if #{@condition.unparse} #{@bodyThen.unparse} ; #{@bodyElse.unparse}"
-    state
+    if bodyElse == nil then
+      "if #{@condition.unparse} #{@bodyThen.unparse}"
+    else
+      "if #{@condition.unparse} #{@bodyThen.unparse} else #{@bodyElse.unparse}"
+    end
   end
   def evaluate(state = {})
-    if condition.evaluate(state) then bodyThen.evaluate(state) else bodyElse.evaluate(state) end
+    if bodyElse == nil then
+      if condition.evaluate(state) then bodyThen.evaluate(state) end
+    else
+      if condition.evaluate(state) then bodyThen.evaluate(state) else bodyElse.evaluate(state) end
+    end
     state
   end
   attr_reader :condition

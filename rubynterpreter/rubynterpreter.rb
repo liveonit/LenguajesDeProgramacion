@@ -20,7 +20,7 @@ ARGF.each do |line|
         puts ast.unparse
         puts ast.evaluate
       rescue => error
-        STDERR.puts "#{error.class}: #{error.message}"
+        STDERR.puts "#{error.class}: #{error.message} \n Stack: #{e.backtrace}"
       ensure
         input = []
       end

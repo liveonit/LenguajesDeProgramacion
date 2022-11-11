@@ -93,8 +93,6 @@ class TestSimpleNumber < Test::Unit::TestCase
     def test_boolean_expression
         parser = Parser.new
         ast = parser.parse_string('!true || (!false && true) && 5 < 3')
-        puts ast.unparse
-        puts ast.evaluate
         assert_equal('((!true) || (((!false) && true ) && (5.0 < 3.0) ) )', ast.unparse )
         assert_equal(false, ast.evaluate )
     end
@@ -103,39 +101,16 @@ class TestSimpleNumber < Test::Unit::TestCase
     def test_boolean_expression
         parser = Parser.new
         ast = parser.parse_string('!true || (!false && true) && 5 < 3')
-        puts ast.unparse
-        puts ast.evaluate
         assert_equal('((!true) || (((!false) && true ) && (5.0 < 3.0) ) )', ast.unparse )
         assert_equal(false, ast.evaluate )
     end
 
-    # def test_assignation_statement
-    #     parser = Parser.new
-    #     ast = parser.parse_string('!true || (!false && true) && 5 < 3')
-    #     puts ast.unparse
-    #     puts ast.evaluate
-    #     assert_equal('((!true) || (((!false) && true ) && (5.0 < 3.0) ) )', ast.unparse )
-    #     assert_equal(false, ast.evaluate )
-    # end
-
-    # def test_if_statement
-    #     parser = Parser.new
-    #     ast = parser.parse_string('!true || (!false && true) && 5 < 3')
-    #     puts ast.unparse
-    #     puts ast.evaluate
-    #     assert_equal('((!true) || (((!false) && true ) && (5.0 < 3.0) ) )', ast.unparse )
-    #     assert_equal(false, ast.evaluate )
-    # end
-
-    # def test_while_statement
-    #     parser = Parser.new
-    #     ast = parser.parse_string('!true || (!false && true) && 5 < 3')
-    #     puts ast.unparse
-    #     puts ast.evaluate
-    #     assert_equal('((!true) || (((!false) && true ) && (5.0 < 3.0) ) )', ast.unparse )
-    #     assert_equal(false, ast.evaluate )
-    # end
-
+    def test_if_and_assignation
+        parser = Parser.new
+        ast = parser.parse_string('if (3 < 5) { var_result = 5 - 3; } else { var_result = 3 - 5; }')
+        assert_equal('if (3.0 < 5.0) ["(var_result=(5.0-3.0))"] else ["(var_result=(3.0-5.0))"]', ast.unparse )
+        assert_equal({"var_result"=>2.0}, ast.evaluate )
+    end
 
 end
 
