@@ -25,7 +25,7 @@ class StatementCreator
     when "While"
       WhileDo.new(val[0], val[1])
     when "Print"
-      PrintStmt.new(val[2])
+      PrintStmt.new(val[0])
     end
   end
 end
@@ -38,17 +38,17 @@ class ExpressionCreator
   def self.instance
     @instance
   end
-  
+
   def create(key, value)
     case key
     when "ID"
-      VariableExp.new(value)
+      VariableExp.new(value[0])
     when "NUM"
-      Numeral.new(value)
+      Numeral.new(value[0])
     when "-"
-      Minus.new(value)
+      Minus.new(value[0])
     when "!"
-      Negation.new(value)
+      Negation.new(value[0])
     when "+"
       Addition.new(value[0]+value[1])
     when "*"

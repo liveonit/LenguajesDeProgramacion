@@ -20,19 +20,19 @@ rule
 
   stmt
     : ID '=' exp ';'
-      { Assignment.new(val[0], val[2]) }
+      { StatementCreator.instance.create("Assignment",[val[0], val[2]]) }
     | '{' stmts '}'
-      { Block.new(val[1]) }
+      { StatementCreator.instance.create("Block1",[val[1]]) }
     | '{' '}'
-      { Block.new() }
+      { StatementCreator.instance.create("Block2",[]) }
     | 'if' '(' exp ')' stmt 'else' stmt
-      { IfThenElse.new(val[2], val[4], val[6]) }
+      { StatementCreator.instance.create("IfThenElse1",[val[2], val[4], val[6]]) }
     | 'if' '(' exp ')' stmt
-      { IfThenElse.new(val[2], val[4], nil) }
+      { StatementCreator.instance.create("IfThenElse2",[val[2], val[4]]) }
     | 'while' '(' exp ')' stmt
-      { WhileDo.new(val[2], val[4]) }
+      { StatementCreator.instance.create("While",[val[2], val[4]]) }
     | 'print' '(' exp ')' ';'
-      { PrintStmt.new(val[2]) }
+      { StatementCreator.instance.create("Print",[val[2]]) }
   stmts 
     : stmt
       { [val[0]] }
@@ -40,9 +40,9 @@ rule
       { val[0] << val[1] }
   exp
     : ID
-      { VariableExp.new(val[0]) }
+      { ExpressionCreator.instance.create("ID",[val[0]])) }
     | NUM
-      { Numeral.new(val[0]) }
+      { ExpressionCreator.instance.create("NUM",[val[0]])) }
     | BOOL
       { if val[0] then
           TrueValue.instance
@@ -51,33 +51,33 @@ rule
         end
       }
     | '-' exp =UMINUS
-      { Minus.new(val[1]) }
+      { ExpressionCreator.instance.create("-",[val[1]])) }
     | '!' exp
-      { Negation.new(val[1]) }
+      { ExpressionCreator.instance.create("!",[val[1]])) }
     | exp '+' exp
-      { Addition.new(val[0], val[2]) }
+      { ExpressionCreator.instance.create("+",[val[0],val[2]])) }
     | exp '-' exp
-      { Subtraction.new(val[0], val[2]) }
+      { ExpressionCreator.instance.create("-",[val[0],val[2]])) }
     | exp '*' exp
-      { Multiplication.new(val[0], val[2]) }
+      { ExpressionCreator.instance.create("*",[val[0],val[2]])) }
     | exp '/' exp
-      { Division.new(val[0], val[2]) }
+      { ExpressionCreator.instance.create("/",[val[0],val[2]])) }
     | exp '==' exp
-      { ComparisonEqual.new(val[0], val[2]) }
+      { ExpressionCreator.instance.create("==",[val[0],val[2]])) }
     | exp '!=' exp
-      { ComparisonDifferent.new(val[0], val[2]) }
+      { ExpressionCreator.instance.create("!=",[val[0],val[2]])) }
     | exp '<' exp
-      { ComparisonLessThan.new(val[0], val[2]) }
+      { ExpressionCreator.instance.create("<",[val[0],val[2]])) }
     | exp '<=' exp
-      { ComparisonLessThanOrEqual.new(val[0], val[2]) }
+      { ExpressionCreator.instance.create("<=",[val[0],val[2]])) }
     | exp '>' exp
-      { ComparisonGreaterThan.new(val[0], val[2]) }
+      { ExpressionCreator.instance.create(">",[val[0],val[2]])) }
     | exp '>=' exp
-      { ComparisonGreaterThanOrEqual.new(val[0], val[2]) }
+      { ExpressionCreator.instance.create(">=",[val[0],val[2]])) }
     | exp '&&' exp
-      { LogicalAnd.new(val[0], val[2]) }
+      { ExpressionCreator.instance.create("&&",[val[0],val[2]])) }
     | exp '||' exp
-      { LogicalOr.new(val[0], val[2]) }
+      { ExpressionCreator.instance.create("||",[val[0],val[2]])) }
     | '(' exp ')'
       { val[1] }
 

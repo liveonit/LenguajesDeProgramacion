@@ -333,43 +333,43 @@ module_eval(<<'.,.,', 'parser.racc', 18)
 
 module_eval(<<'.,.,', 'parser.racc', 22)
   def _reduce_3(val, _values)
-     Assignment.new(val[0], val[2])
+     StatementCreator.instance.create("Assignment",[val[0], val[2]])
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 24)
   def _reduce_4(val, _values)
-     Block.new(val[1])
+     StatementCreator.instance.create("Block1",[val[1]])
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 26)
   def _reduce_5(val, _values)
-     Block.new()
+     StatementCreator.instance.create("Block2",[])
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 28)
   def _reduce_6(val, _values)
-     IfThenElse.new(val[2], val[4], val[6])
+     StatementCreator.instance.create("IfThenElse1",[val[2], val[4], val[6]])
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 30)
   def _reduce_7(val, _values)
-     IfThenElse.new(val[2], val[4], nil)
+     StatementCreator.instance.create("IfThenElse2",[val[2], val[4]])
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 32)
   def _reduce_8(val, _values)
-     WhileDo.new(val[2], val[4])
+     StatementCreator.instance.create("While",[val[2], val[4]])
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 34)
   def _reduce_9(val, _values)
-     PrintStmt.new(val[2])
+     StatementCreator.instance.create("Print",[val[2]])
   end
 .,.,
 
@@ -387,13 +387,13 @@ module_eval(<<'.,.,', 'parser.racc', 39)
 
 module_eval(<<'.,.,', 'parser.racc', 42)
   def _reduce_12(val, _values)
-     VariableExp.new(val[0])
+     ExpressionCreator.instance.create("ID",[val[0]]))
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 44)
   def _reduce_13(val, _values)
-     Numeral.new(val[0])
+     ExpressionCreator.instance.create("NUM",[val[0]]))
   end
 .,.,
 
@@ -410,85 +410,85 @@ module_eval(<<'.,.,', 'parser.racc', 46)
 
 module_eval(<<'.,.,', 'parser.racc', 53)
   def _reduce_15(val, _values)
-     Minus.new(val[1])
+     ExpressionCreator.instance.create("-",[val[1]]))
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 55)
   def _reduce_16(val, _values)
-     Negation.new(val[1])
+     ExpressionCreator.instance.create("!",[val[1]]))
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 57)
   def _reduce_17(val, _values)
-     Addition.new(val[0], val[2])
+     ExpressionCreator.instance.create("+",[val[0],val[2]]))
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 59)
   def _reduce_18(val, _values)
-     Subtraction.new(val[0], val[2])
+     ExpressionCreator.instance.create("-",[val[0],val[2]]))
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 61)
   def _reduce_19(val, _values)
-     Multiplication.new(val[0], val[2])
+     ExpressionCreator.instance.create("*",[val[0],val[2]]))
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 63)
   def _reduce_20(val, _values)
-     Division.new(val[0], val[2])
+     ExpressionCreator.instance.create("/",[val[0],val[2]]))
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 65)
   def _reduce_21(val, _values)
-     ComparisonEqual.new(val[0], val[2])
+     ExpressionCreator.instance.create("==",[val[0],val[2]]))
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 67)
   def _reduce_22(val, _values)
-     ComparisonDifferent.new(val[0], val[2])
+     ExpressionCreator.instance.create("!=",[val[0],val[2]]))
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 69)
   def _reduce_23(val, _values)
-     ComparisonLessThan.new(val[0], val[2])
+     ExpressionCreator.instance.create("<",[val[0],val[2]]))
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 71)
   def _reduce_24(val, _values)
-     ComparisonLessThanOrEqual.new(val[0], val[2])
+     ExpressionCreator.instance.create("<=",[val[0],val[2]]))
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 73)
   def _reduce_25(val, _values)
-     ComparisonGreaterThan.new(val[0], val[2])
+     ExpressionCreator.instance.create(">",[val[0],val[2]]))
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 75)
   def _reduce_26(val, _values)
-     ComparisonGreaterThanOrEqual.new(val[0], val[2])
+     ExpressionCreator.instance.create(">=",[val[0],val[2]]))
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 77)
   def _reduce_27(val, _values)
-     LogicalAnd.new(val[0], val[2])
+     ExpressionCreator.instance.create("&&",[val[0],val[2]]))
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 79)
   def _reduce_28(val, _values)
-     LogicalOr.new(val[0], val[2])
+     ExpressionCreator.instance.create("||",[val[0],val[2]]))
   end
 .,.,
 
