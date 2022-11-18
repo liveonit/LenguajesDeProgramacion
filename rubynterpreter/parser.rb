@@ -4,11 +4,13 @@
 # from Racc grammar file "".
 #
 
+require 'racc/parser.rb'
+
+
 require 'strscan'
 require_relative 'expressions'
 require_relative 'statements'
 require_relative 'factory'
-
 
 class Lexer
   NUMBER = /\d+(\.\d+)?/
@@ -39,7 +41,7 @@ end
 
 class Parser < Racc::Parser
 
-module_eval(<<'...end parser.racc/module_eval...', 'parser.racc', 120)
+module_eval(<<'...end parser.racc/module_eval...', 'parser.racc', 121)
 
 def next_token
   @lexer.next_token
