@@ -1,6 +1,7 @@
+require_relative 'parser'
 require_relative 'expressions'
 require_relative 'statements'
-require_relative 'parser'
+
 
 puts "Welcome to Rubynterpreter."
 puts "Finish your code with an empty line to process it."

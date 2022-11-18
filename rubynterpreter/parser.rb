@@ -4,12 +4,11 @@
 # from Racc grammar file "".
 #
 
-require 'racc/parser.rb'
-
-
 require 'strscan'
 require_relative 'expressions'
 require_relative 'statements'
+require_relative 'factory'
+
 
 class Lexer
   NUMBER = /\d+(\.\d+)?/

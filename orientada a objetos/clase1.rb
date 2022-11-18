@@ -52,6 +52,16 @@ class Deck
         end
         return Deck.new(cards)
     end
+
+    #Agregar el método peep que retorna la primera carta del mazo.
+    def peep()
+        cards[0]
+    end
+
+    #Agregar el método suitCount que dado un palo (o suit) retorna la cantidad de cartas en el mazo con ese palo.
+    def suitCount(suit)
+        cards.select  {|card| card.suit == suit }.length
+    end
 end
 
 if __FILE__ == $0
@@ -59,18 +69,14 @@ if __FILE__ == $0
     #mr.read
 
     espadilla = Card.new("Espadas", 1)
-    puts espadilla.suit
+    ancho = Card.new("Espadas", 7)
 
     borracho = Card.new("Copas", 12)
-    puts borracho.rank
 
-    deck = Deck.new([borracho, espadilla])
-    puts "#{deck.cards}"
+    deck = Deck.new([borracho, espadilla, ancho])
+    puts ""
+    puts "Numero de cartas de espada: #{deck.suitCount("Espadas")}"
+    first = deck.peep()
+    puts "Primera carta del mazo deberia ser 12 copas:#{first.rank} #{first.suit}"
 
-    puts deck.full
-
-    puts "#{deck.shuffle}"
-
-    puts "#{deck.deal(1).cards}"
-    puts "#{deck.cards}"
 end
