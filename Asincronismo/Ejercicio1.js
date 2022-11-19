@@ -1,4 +1,4 @@
-const distance = (a, b) => a && b ? Math.sqrt(Math.abs(a.x - b.x) ** 2 + Math.abs((a.y - b.y)) ** 2) : NaN
+const distance = (a, b) => a && b ? Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2) : NaN
 
 const range = (start, end, step) => {
   const result = []
